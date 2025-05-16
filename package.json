@@ -11,8 +11,15 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/express": "^5.0.1",
     "@types/node": "^22.15.18",
     "tsx": "^4.19.4",
     "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "esbuild": "^0.25.4",
+    "express": "^5.1.0",
+    "get-tsconfig": "^4.10.0",
+    "resolve-pkg-maps": "^1.0.0"
   }
 }

@@ -20,6 +20,9 @@
     "esbuild": "^0.25.4",
     "express": "^5.1.0",
     "get-tsconfig": "^4.10.0",
-    "resolve-pkg-maps": "^1.0.0"
+    "kleur": "^4.1.5",
+    "resolve-pkg-maps": "^1.0.0",
+    "winston": "^3.17.0",
+    "zod": "^3.25.28"
   }
 }

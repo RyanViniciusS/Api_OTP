@@ -1,10 +1,16 @@
 import { Request, Response } from "express";
+import { createUserSchema, CreateUserInput } from "../schemas/schemas";
 
-export const users_Controler = async (req: Request, res: Response): Promise<void> => {
-  const {name, email } = req.body;
-  
-  if(!name || !email){
-     res.send({message:"Está faltando algum dados"}).status(400)
-     return
+export const createUser = async (req: Request<unknown, unknown, CreateUserInput>, res: Response): Promise<void> => {
+  try {
+    const dadosValidos = createUserSchema.parse(req.body)
+    console.log(dadosValidos)
+    const { name, email, senha, avatar } = dadosValidos;
+
   }
-};
+  catch {
+
+  }
+
+}
+

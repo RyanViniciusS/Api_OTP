@@ -1,16 +1,11 @@
 import { Request, Response } from "express";
-import { createUserSchema, CreateUserInput } from "../schemas/schemas";
 
-export const createUser = async (req: Request<unknown, unknown, CreateUserInput>, res: Response): Promise<void> => {
-  try {
-    const dadosValidos = createUserSchema.parse(req.body)
-    console.log(dadosValidos)
-    const { name, email, senha, avatar } = dadosValidos;
+export const createUser = async (req: Request, res: Response): Promise<void> => {
+  const { name, email, senha, avatar } = req.body; // já validado pelo middleware
 
-  }
-  catch {
-
-  }
-
-}
-
+  // Aqui você pode chamar o service, salvar no banco etc.
+  res.status(201).json({
+    message: "Usuário criado com sucesso",
+    data: { name, email, avatar },
+  });
+};

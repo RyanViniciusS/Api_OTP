@@ -1,0 +1,35 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Api Create_Users",
+    "version": "1.0.0",
+    "description": "Documentação da API para gestao de usuários"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:7001",
+      "description": "Servidor Local"
+    }
+  ],
+  "paths": {
+    "/user": {
+      "sumary": "Create Users",
+      "description": "Endpoint para criar um usuario com name, email, senha, avatar",
+      "requestbody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "ref": "#/src/schemas/createUserSchema"
+            }
+          }
+        }
+      }
+    },
+    "reponse": {
+        "201":{
+            
+        }
+    }
+  }
+}

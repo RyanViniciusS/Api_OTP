@@ -7,6 +7,16 @@ services:
       - "6379:6379"
     command: ["redis-server", "--requirepass", "senha123"]
 
+  # Interface RedisInsight
+  redisinsight:
+    image: redis/redisinsight:latest   # corrigido 'lastest' para 'latest'
+    container_name: redisinsight
+    ports:
+      - "5540:5540"   # Web UI vai ficar acessível em http://localhost:5540
+    restart: unless-stopped
+    depends_on:
+      - redis   # garante que o redis suba antes do redisinsight
+
   # Mailpit para testes de envio de e-mails
   mailpit:
     image: axllent/mailpit

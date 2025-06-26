@@ -1,13 +1,10 @@
 import express from "express";
 
 import { createLogger } from "./utils/logger";
-import { redisdb } from "./db/redis";
 
 import Doc_Router from "./router/swagger.router"
 import User_Router from "./router/users.router";
 import Email_Router from "./router/email-otp.router"
-
-redisdb();
 
 const app = express();
 const port = Number(process.env.PORT) || 3001;

@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { createUser } from "../controllers/users.controller";
 import { validate } from "../middlewares/user.middlewares";
-import { createUserSchema } from "../schemas/schemas";
+import { createUserSchema } from "../schemas/user.schema";
 const router = Router();
 
 router.post("/", validate(createUserSchema), createUser);

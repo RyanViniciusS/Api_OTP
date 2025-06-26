@@ -5,7 +5,7 @@ import { redisClient } from "../db/redis";
 
 const OTP_TTL_SECONDS = 600; // 10 minutos
 
-export async function createAndSendOTP(email: string): Promise<void> {
+export async function createOtpService(email: string): Promise<void> {
   const otp = generateOTP();
   const redisKey = `otp:${email}`;
 
@@ -16,4 +16,17 @@ export async function createAndSendOTP(email: string): Promise<void> {
     console.error('Erro ao salvar OTP no Redis ou enviar e-mail:', err);
     throw err;
   }
+}
+
+export async function valideOtpService(email: string, otp: string): Promise<boolean> {
+  const chaveRedis = `otp:${email}`;
+  const codigoSalvo = await redisClient.get(chaveRedis);
+  if (!codigoSalvo) {
+    return false;
+  }
+  const otpvalido = codigoSalvo === String(otp);
+  if (otpvalido) {
+    await redisClient.del(chaveRedis)
+  }
+  return otpvalido;
 }

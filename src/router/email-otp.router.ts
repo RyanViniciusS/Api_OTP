@@ -7,4 +7,5 @@ const router = Router();
 router.post("/send", EmailOtpController);
 router.post("/verify", validate(otpschema), VerifyOtpController);
 
+
 export default router;

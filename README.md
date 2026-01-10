@@ -1,16 +1,19 @@
-# Precisa do mailpit para validar os email de teste
+API OTP e Reset de Senha
+
+🗂 Diagrama do Banco de Dados
+![Diagrama do Banco](./src/img/dbml.png)
+
+💻 Testando e-mails localmente
+
+Para validar e-mails sem precisar de servidor real, use Mailpit:
 
 docker run -d -p 1025:1025 -p 8025:8025 axllent/mailpit
 
-#MELHORIAS :
-🔒 Segurança
+- SMTP: localhost:1025
+- Painel Web: http://localhost:8025
 
-Limitar tentativas de OTP (ex.: máximo 3-5 tentativas por período).
+Mailpit captura e-mails enviados pela API para testes, ideal para verificar OTPs e links de reset de senha.
 
-Expirar OTPs automaticamente após uso ou tempo limite.
+Documentação interativa do Swagger localmente em:
 
-Salvar OTPs como hash no banco (bcrypt/argon2) em vez de texto.
-
-Bloquear temporariamente usuários após tentativas suspeitas.
-
-Não revelar se o e-mail/usuário existe nas respostas.
+![Swagger API](./src/img/swagger.png)

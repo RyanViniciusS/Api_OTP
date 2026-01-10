@@ -46,5 +46,32 @@ export async function sendEmailWithOtp(to: string, otp: string) {
     html,
   });
 
-  console.log("Email enviado para:", to, "ID:", result.id);
+  //console.log("Email enviado para:", to, "ID:", result.id);
 }
+
+
+export async function sendEmailWithPassWord(to: string, content: string) {
+  const isLink = content.startsWith("http");
+  const subject = isLink ? "🔐 Redefina sua senha" : "🔐 Verificação de segurança";
+
+  const html = isLink
+    ? `<div style="padding:30px;font-family:Arial,sans-serif;">
+        <h2>Redefinição de senha</h2>
+        <p>Clique no link abaixo para criar uma nova senha. Este link é válido por 1 hora.</p>
+        <a href="${content}" style="padding:12px 20px;background-color:#2ecc71;color:white;border-radius:6px;text-decoration:none;">
+          Redefinir senha
+        </a>
+        <p>Se você não solicitou a redefinição, ignore este e-mail.</p>
+      </div>`
+    : `<div style="padding:30px;font-family:Arial,sans-serif;">
+        <p>Seu código OTP é: <strong>${content}</strong></p>
+      </div>`;
+
+  await resend.emails.send({
+    from: "from@resend.dev",
+    to,
+    subject,
+    html,
+  });
+}
+

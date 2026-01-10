@@ -22,6 +22,11 @@ model Otp {
   code      String
   expiresAt DateTime
   used      Boolean  @default(false)
-  userId    String
-  user      User     @relation(fields: [userId], references: [id], name: "UserOtps")
+  createdAt DateTime @default(now())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([code])
 }

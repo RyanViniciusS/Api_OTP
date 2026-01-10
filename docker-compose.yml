@@ -1,0 +1,26 @@
+services:
+  # Redis para cache (ex: armazenar OTP)
+  redis:
+    image: redis:7-alpine
+    container_name: redis
+    ports:
+      - "6379:6379"
+    command: ["redis-server", "--requirepass", "senha123"]
+
+  # Interface RedisInsight
+  redisinsight:
+    image: redis/redisinsight:latest   # corrigido 'lastest' para 'latest'
+    container_name: redisinsight
+    ports:
+      - "5540:5540"   # Web UI vai ficar acessível em http://localhost:5540
+    restart: unless-stopped
+    depends_on:
+      - redis   # garante que o redis suba antes do redisinsight
+
+  # Mailpit para testes de envio de e-mails
+  mailpit:
+    image: axllent/mailpit
+    container_name: mailpit
+    ports:
+      - "1025:1025" # SMTP
+      - "8025:8025" # Interface Web (http://localhost:8025)

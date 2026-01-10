@@ -1,0 +1,61 @@
+openapi: 3.0.3
+info:
+  title: Api Create_Users
+  version: 1.0.0
+  description: Documentação da API para gestão de usuários
+servers:
+  - url: http://localhost:7001
+    description: Servidor Local
+paths:
+  /user:
+    post:
+      summary: Create Users
+      description: Endpoint para criar um usuário com name, email, senha e avatar
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUser'
+      responses:
+        '201':
+          description: Usuário criado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+        '400':
+          description: Requisição inválida
+components:
+  schemas:
+    CreateUser:
+      type: object
+      required:
+        - name
+        - email
+        - senha
+      properties:
+        name:
+          type: string
+          example: Ryan
+        email:
+          type: string
+          format: email
+          example: ryan@example.com
+        senha:
+          type: string
+          minLength: 6
+          example: senha123
+        avatar:
+          type: string
+          format: uri
+          nullable: true
+          example: http://avatar.com/img.png
+    UserResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Usuário criado com sucessosss
+        data:
+          $ref: '#/components/schemas/CreateUser'

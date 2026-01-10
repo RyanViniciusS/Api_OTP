@@ -1,61 +1,145 @@
 openapi: 3.0.3
 info:
-  title: Api Create_Users
+  title: API OTP e Reset de Senha
+  description: API RESTful para cadastro, OTP e reset de senha.
   version: 1.0.0
-  description: Documentação da API para gestão de usuários
 servers:
-  - url: http://localhost:7001
-    description: Servidor Local
+  - url: http://localhost:3001
+
+tags:
+  - name: User
+    description: Rotas de usuário
+  - name: Forgot Password
+    description: Rotas de reset de senha
+  - name: OTP
+    description: Rotas de OTP (verificação e reset)
+
 paths:
   /user:
     post:
-      summary: Create Users
-      description: Endpoint para criar um usuário com name, email, senha e avatar
+      tags:
+        - User
+      summary: Criar novo usuário
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateUser'
+              type: object
+              properties:
+                nome:
+                  type: string
+                email:
+                  type: string
+                senha:
+                  type: string
+                avatar:
+                  type: string
+                  nullable: true
+              required:
+                - nome
+                - email
+                - senha
       responses:
         '201':
           description: Usuário criado com sucesso
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UserResponse'
         '400':
-          description: Requisição inválida
-components:
-  schemas:
-    CreateUser:
-      type: object
-      required:
-        - name
-        - email
-        - senha
-      properties:
-        name:
-          type: string
-          example: Ryan
-        email:
-          type: string
-          format: email
-          example: ryan@example.com
-        senha:
-          type: string
-          minLength: 6
-          example: senha123
-        avatar:
-          type: string
-          format: uri
-          nullable: true
-          example: http://avatar.com/img.png
-    UserResponse:
-      type: object
-      properties:
-        message:
-          type: string
-          example: Usuário criado com sucessosss
-        data:
-          $ref: '#/components/schemas/CreateUser'
+          description: Dados inválidos
+
+  /forgot-password/request:
+    post:
+      tags:
+        - Forgot Password
+      summary: Solicitar link de reset de senha
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+              required:
+                - email
+      responses:
+        '200':
+          description: Link enviado se e-mail existir
+        '400':
+          description: Email inválido
+
+  /forgot-password/reset:
+    post:
+      tags:
+        - Forgot Password
+      summary: Redefinir senha usando token
+      parameters:
+        - in: query
+          name: token
+          schema:
+            type: string
+          required: true
+          description: Token recebido por e-mail
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                newPassword:
+                  type: string
+              required:
+                - newPassword
+      responses:
+        '200':
+          description: Senha redefinida com sucesso
+        '400':
+          description: Token inválido, expirado ou dados inválidos
+
+  /emailotp/reset:
+    post:
+      tags:
+        - OTP
+      summary: Resetar OTP para envio de novo código
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+              required:
+                - email
+      responses:
+        '200':
+          description: OTP enviado
+        '400':
+          description: Email inválido
+
+  /emailotp/verify:
+    post:
+      tags:
+        - OTP
+      summary: Verificar OTP enviado
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                otp:
+                  type: string
+              required:
+                - email
+                - otp
+      responses:
+        '200':
+          description: OTP válido
+        '400':
+          description: OTP inválido ou expirado

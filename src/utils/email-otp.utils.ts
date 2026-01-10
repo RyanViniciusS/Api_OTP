@@ -46,5 +46,5 @@ export async function sendEmailWithOtp(to: string, otp: string) {
     html,
   });
 
-  console.log("Email enviado para:", to, "ID:", result.id);
+  //console.log("Email enviado para:", to, "ID:", result.id);
 }

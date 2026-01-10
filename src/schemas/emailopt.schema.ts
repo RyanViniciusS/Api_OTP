@@ -1,6 +1,8 @@
-import { z } from 'zod';
+import { z } from "zod";
 
-export const otpschema = z.object({
-    email: z.string().email('E-mail inválido'),
-    otp: z.string().regex(/^\d{6}$/, "OTP deve ter 6 dígitos numéricos")
-})
+export const verifyOtpSchema = z.object({
+  email: z.string().email(),
+  otp: z.string().length(6),
+});
+
+export type VerifyOtpInput = z.infer<typeof verifyOtpSchema>;

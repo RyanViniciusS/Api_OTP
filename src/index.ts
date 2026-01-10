@@ -4,8 +4,8 @@ import { createLogger } from "./utils/logger";
 
 import Doc_Router from "./router/swagger.router"
 import User_Router from "./router/users.router";
-import EmailOTP_Router from "./router/email-otp.router"
-import Email_Passowrd from "./router/email-password.router"
+import EmailOTP_Router from "./router/otp/email-otp.router"
+//import Email_Passowrd from "./router/email-password.router"
 
 const app = express();
 const port = Number(process.env.PORT) || 3001;
@@ -17,7 +17,7 @@ app.use("/doc", Doc_Router);
 
 app.use("/user", User_Router);
 app.use("/emailotp", EmailOTP_Router);
-app.use("/email-password", Email_Passowrd);
+//app.use("/email-password", Email_Passowrd);
 
 
 app.get("/", (req, res) => {
